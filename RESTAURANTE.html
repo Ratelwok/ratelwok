@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Ratel Wok Santarém - Delicious Sushi, Teppanyaki, Seafood, and Chinese Cuisine">
+  <meta name="keywords" content="Ratel Wok, Santarém, Sushi, Teppanyaki, Seafood, Chinese Food">
+
+  <title>Ratel Wok Santarém</title>
+
+  <!-- 1) 预连接到字体资源，提高字体加载效率 -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Font -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
+  />
+
+  <style>
+    /* =============================== 1. 颜色 & 全局变量 =============================== */
+    :root {
+      --primary-color: #d2ab66; /* 金色 */
+      --background-color: #000; /* 黑色背景 */
+      --text-color: #fff; /* 白色文字 */
+      --secondary-text-color: #bbb; /* 辅助灰色文字 */
+      --container-bg: #000; /* 容器背景：黑色 */
+      --section-padding: 4rem; /* 各区块上下内边距 */
+      --title-font-size: 2.2rem; /* 标题字体大小 */
+      --overlay-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* =============================== 2. 全局样式 =============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* =============================== 3. 导航栏 =============================== */
+    nav {
+      position: sticky;
+      top: 0;
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 999;
+    }
+    nav a {
+      margin-right: 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    /* 语言下拉菜单 */
+    .language-dropdown {
+      position: relative;
+      margin-left: auto; /* 把下拉按钮推到右边 */
+      margin-right: 1rem;
+    }
+    .dropbtn {
+      background: transparent;
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+    }
+    .dropbtn .caret {
+      margin-left: 0.3em;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #333;
+      min-width: 110px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      z-index: 999;
+    }
+    .dropdown-content a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #fff;
+      text-align: left;
+      font-size: 0.95rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+    .dropdown-content a:hover {
+      background-color: var(--primary-color);
+      color: #000;
+    }
+    .dropdown-content.show {
+      display: block;
+    }
+    /* 联系信息 */
+    .contact-info {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .contact-info img {
+      width: 40px;
+    }
+
+    /* =============================== 4. Hero Banner =============================== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      background: url('https://via.placeholder.com/1200x800?text=Ratel+Wok+Banner') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--overlay-color);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 1rem;
+    }
+    .big-logo {
+      width: 100px;
+      margin: 0 auto 1rem auto;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero-content p {
+      font-size: 1.4rem;
+      color: var(--secondary-text-color);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* =============================== 5. 淡入动画 =============================== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =============================== 6. 通用容器 =============================== */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--section-padding) 2rem;
+      background-color: var(--container-bg);
+    }
+    .container h2 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: var(--title-font-size);
+    }
+    .container p {
+      color: var(--secondary-text-color);
+      font-size: 1rem;
+      max-width: 800px;
+      margin: 0 auto 2rem auto;
+      text-align: center;
+      line-height: 1.8;
+    }
+
+    /* =============================== 7. Buffet / Comidas =============================== */
+    .food-category {
+      margin-bottom: 3rem;
+    }
+    .food-category h3 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
+    .gallery-container {
+      display: flex;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      gap: 1rem;
+      padding-bottom: 0.5rem;
+    }
+    .gallery-item {
+      flex: 0 0 280px;
+      height: 180px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.1);
+      filter: brightness(0.9);
+    }
+
+    /* =============================== 8. Horário & Preçário =============================== */
+    .info-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .info-section p {
+      color: var(--secondary-text-color);
+      margin-top: 1rem;
+      line-height: 1.8;
+    }
+    /* Horário特殊样式 */
+    .horario-highlight {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .horario-highlight .time-sep {
+      margin: 0 1rem;
+      font-weight: 400;
+    }
+    /* Preçário特殊样式 */
+    .price-block {
+      border-top: 2px solid var(--primary-color); /* 分割线改成2px & 金色 */
+      padding: 1rem 0;
+      margin: 1.5rem 0;
+    }
+    .price-block:first-child {
+      border-top: none;
+    }
+    .block-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .block-subtitle {
+      font-size: 0.95rem;
+      color: #ccc;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .menu-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin: 0.5rem 0;
+    }
+    .menu-line span {
+      display: inline-block;
+      line-height: 1.4;
+    }
+    .price {
+      font-weight: 600;
+      text-align: right;
+      min-width: 70px;
+    }
+
+    /* =============================== 9. Galeria (替换原Sobre nós) =============================== */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+      transition: transform 0.3s, filter 0.3s;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+      filter: brightness(0.9);
+    }
+
+    /* =============================== 10. Contacto (背景黑色) =============================== */
+    #contacto {
+      background-color: #000; /* 变成黑色 */
+      color: #fff;
+      padding: var(--section-padding) 2rem;
+      text-align: center;
+    }
+    #contacto h2 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: var(--title-font-size);
+    }
+    #contacto p {
+      margin: 0.5rem 0;
+      line-height: 1.6;
+    }
+    .social-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+    }
+    .social-item img {
+      width: 30px;
+      filter: grayscale(100%);
+      transition: 0.3s;
+    }
+    .social-item img:hover {
+      filter: grayscale(0%);
+      transform: scale(1.1);
+    }
+    .map-container {
+      width: 100%;
+      margin-top: 2rem;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 350px;
+      border: 0;
+    }
+
+    /* =============================== 11. Footer =============================== */
+    footer {
+      background-color: #111;
+      text-align: center;
+      padding: 1rem 0;
+      color: var(--secondary-text-color);
+      font-size: 0.9rem;
+    }
+
+    /* =============================== 12. Responsividade =============================== */
+    @media (max-width: 768px) {
+      .hero {
+        height: 50vh;
+      }
+      .big-logo {
+        width: 80px;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-content p {
+        font-size: 1.2rem;
+      }
+      .container {
+        padding: 2rem 1rem;
+      }
+      .gallery-item {
+        flex: 0 0 220px;
+        height: 140px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+        padding: 1rem;
+      }
+      nav a {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+      .language-dropdown {
+        margin: 0.5rem 0;
+      }
+      .contact-info {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .contact-info span {
+        display: block;
+        font-size: 0.9rem;
+      }
+      .contact-info img {
+        width: 30px;
+      }
+      .dropdown-content a {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- =========== NAV =========== -->
+  <nav class="fade-in">
+    <a href="#galeria">Galeria</a>
+    <a href="#comidas">Buffet</a>
+    <a href="#horario">Horário</a>
+    <a href="#precario">Preçário</a>
+    <a href="#contacto">Contacto</a>
+    <div class="language-dropdown">
+      <button id="langBtn" class="dropbtn">
+        Language
+        <span class="caret">▼</span>
+      </button>
+      <div id="langMenu" class="dropdown-content">
+        <a href="?lang=pt">Português</a>
+        <a href="?lang=en">English</a>
+        <a href="?lang=zh">中文</a>
+      </div>
+    </div>
+    <div class="contact-info">
+      <span>+351 262 302 240</span>
+      <!-- 2) 给导航Logo图添加loading="lazy"以优化加载 -->
+      <img
+        src="https://i.imgur.com/B4btcqY.png"
+        alt="Logo Ratel Wok"
+        loading="lazy"
+      >
+    </div>
+  </nav>
+
+  <!-- =========== HERO BANNER =========== -->
+  <section class="hero fade-in">
+    <div class="hero-content">
+      <!-- 3) 给大Logo也添加 lazy 属性（虽然本身不大，但仍可示范） -->
+      <img
+        src="https://i.imgur.com/B4btcqY.png"
+        alt="Big Logo"
+        class="big-logo"
+        loading="lazy"
+      >
+      <h1>Ratel wok santarém</h1>
+      <p>Estaremos brevemente ao seu serviço</p>
+    </div>
+  </section>
+
+  <!-- =========== GALERIA (原“SOBRE NÓS”) =========== -->
+  <section id="galeria" class="container fade-in">
+    <h2>Galeria</h2>
+    <p>Espreite algumas imagens do nosso ambiente e pratos! (Abaixo预留位置添加 mais fotos)</p>
+    <div class="gallery-grid">
+      <!-- 下面只是示例图片，替换为你的真实图片链接 -->
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+1"
+        alt="Galeria 1"
+        loading="lazy"
+      >
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+2"
+        alt="Galeria 2"
+        loading="lazy"
+      >
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+3"
+        alt="Galeria 3"
+        loading="lazy"
+      >
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+4"
+        alt="Galeria 4"
+        loading="lazy"
+      >
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+5"
+        alt="Galeria 5"
+        loading="lazy"
+      >
+      <img
+        src="https://via.placeholder.com/600x400?text=Foto+6"
+        alt="Galeria 6"
+        loading="lazy"
+      >
+      <!-- 可以无限再加更多 img -->
+    </div>
+  </section>
+
+  <!-- =========== BUFFET / COMIDAS =========== -->
+  <main>
+    <section id="comidas" class="container fade-in">
+      <h2>Aqui, podem encontrar...</h2>
+      <!-- Sushi -->
+      <div class="food-category">
+        <h3>Sushi</h3>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Sushi+1"
+              alt="Sushi 1"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Sushi+2"
+              alt="Sushi 2"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Sushi+3"
+              alt="Sushi 3"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Grelhados -->
+      <div class="food-category">
+        <h3>Comidas grelhadas</h3>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Teppanyaki+1"
+              alt="Teppanyaki 1"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Teppanyaki+2"
+              alt="Teppanyaki 2"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Mariscos -->
+      <div class="food-category">
+        <h3>Mariscos</h3>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Mariscos+1"
+              alt="Mariscos 1"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Mariscos+2"
+              alt="Mariscos 2"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+      <!-- Comidas Chinesas -->
+      <div class="food-category">
+        <h3>Comidas chinesas</h3>
+        <div class="gallery-container">
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Comidas+Chinesas+1"
+              alt="Comidas Chinesas 1"
+              loading="lazy"
+            >
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://via.placeholder.com/300x200?text=Comidas+Chinesas+2"
+              alt="Comidas Chinesas 2"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========== HORÁRIO =========== -->
+    <section id="horario" class="container info-section fade-in">
+      <h2>Horário</h2>
+      <!-- 一行显示: 12H às 15H / 19H às 23H -->
+      <div class="horario-highlight">
+        Das 12H às 15H
+        <span class="time-sep">/</span>
+        Das 19H às 23H
+      </div>
+    </section>
+
+    <!-- =========== PREÇÁRIO =========== -->
+    <section id="precario" class="container info-section fade-in">
+      <h2>Preçário</h2>
+      <!-- 2ª Feira a 6ª Feira (Almoço) -->
+      <div class="price-block">
+        <div class="block-title">2ª feira a 6ª feira</div>
+        <div class="block-subtitle">BEBIDAS NÃO INCLUÍDAS</div>
+        <div class="menu-line">
+          <span>
+            ALMOÇO<br>
+            CRIANÇAS DOS 4 AOS 10 ANOS
+          </span>
+          <span class="price">
+            12.95€<br>
+            7.95€
+          </span>
+        </div>
+      </div>
+      <!-- 2ª Feira a 6ª Feira (Jantar) -->
+      <div class="price-block">
+        <div class="block-title">2ª feira a 6ª feira</div>
+        <div class="block-subtitle">BEBIDAS NÃO INCLUÍDAS</div>
+        <div class="menu-line">
+          <span>
+            JANTAR<br>
+            CRIANÇAS DOS 4 AOS 10 ANOS
+          </span>
+          <span class="price">
+            15.95€<br>
+            8.95€
+          </span>
+        </div>
+      </div>
+      <!-- 6ª Feira (Jantar) -->
+      <div class="price-block">
+        <div class="block-title">6ª feira</div>
+        <div class="block-subtitle">BEBIDAS NÃO INCLUÍDAS</div>
+        <div class="menu-line">
+          <span>
+            JANTAR<br>
+            CRIANÇAS DOS 4 AOS 10 ANOS
+          </span>
+          <span class="price">
+            15.95€<br>
+            8.95€
+          </span>
+        </div>
+      </div>
+      <!-- Fim de Semana e Feriados -->
+      <div class="price-block">
+        <div class="block-title">FIM DE SEMANA E FERIADOS</div>
+        <div class="block-subtitle">BEBIDAS NÃO INCLUÍDAS</div>
+        <div class="menu-line">
+          <span>
+            ALMOÇO E JANTAR<br>
+            CRIANÇAS DOS 4 AOS 10 ANOS
+          </span>
+          <span class="price">
+            15.95€<br>
+            8.95€
+          </span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========== CONTACTO =========== -->
+  <section id="contacto" class="fade-in">
+    <h2>Contacto</h2>
+    <p><strong>Endereço:</strong> Rua Conde da Ribeira Grande, 21</p>
+    <p>
+      <strong>Telefone:</strong>
+      <a href="tel:+351262302240" style="color: inherit;">+351 262 302 240</a>
+    </p>
+    <div class="social-icons">
+      <div class="social-item">
+        <!-- 4) 为新窗口打开的链接增加 rel="noopener" 以提高安全性 -->
+        <a href="https://www.facebook.com/RatelWok" target="_blank" rel="noopener">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/174/174848.png"
+            alt="Facebook"
+            loading="lazy"
+          >
+        </a>
+        <span>@RatelWok</span>
+      </div>
+      <div class="social-item">
+        <a href="https://www.instagram.com/ratelwok" target="_blank" rel="noopener">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/174/174855.png"
+            alt="Instagram"
+            loading="lazy"
+          >
+        </a>
+        <span>@ratelwok</span>
+      </div>
+    </div>
+    <!-- Google Map -->
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3111.1065447124233!2d-8.685607484737685!3d39.23865267952895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd187491c946e77b%3A0x1234567890abcdef!2sRatel%20Wok%20Santar%C3%A9m!5e0!3m2!1spt-BR!2spt!4v1634088474464!5m2!1spt-BR!2spt"
+        allowfullscreen=""
+        loading="lazy"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- =========== FOOTER =========== -->
+  <footer class="fade-in">
+    <p>
+      &copy; <span id="year"></span> Ratel Wok Santarém. Todos os direitos reservados.
+    </p>
+  </footer>
+
+  <script>
+    // 1. 动态更新年份
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 2. 导航平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+    // 3. Intersection Observer：滚动到视野才淡入
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => observer.observe(el));
+
+    // 4. 语言下拉菜单逻辑
+    const langBtn = document.getElementById('langBtn');
+    const langMenu = document.getElementById('langMenu');
+    langBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      langMenu.classList.toggle('show');
+    });
+    window.addEventListener('click', e => {
+      if (!e.target.matches('#langBtn') && !e.target.closest('#langMenu')) {
+        if (langMenu.classList.contains('show')) {
+          langMenu.classList.remove('show');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
